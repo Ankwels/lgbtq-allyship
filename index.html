@@ -26,17 +26,18 @@
   <script type="text/babel" data-presets="react">
 const { useState, useEffect, useRef } = React;
 
-// Regent's brand palette
+// Regent's University 2024 official brand palette
 const C = {
-  teal: "#1E454A",
-  red: "#CE4B3E",
-  gold: "#C3A35B",
-  salmon: "#FFA188",
-  green: "#5E905F",
-  lime: "#DAF092",
-  pink: "#FF81B0",
-  sky: "#A4DEEB",
-  cream: "#EEEED2",
+  teal:    "#195C4D",   // RU green — background
+  red:     "#710704",   // RU red
+  gold:    "#D8CBF1",   // RU violet — accent role
+  salmon:  "#FAB190",   // RU peach
+  green:   "#195C4D",   // RU green
+  lime:    "#E7F95D",   // RU yellow
+  pink:    "#D8CBF1",   // RU violet
+  sky:     "#70ACE9",   // RU light blue
+  cream:   "#F7F1E8",   // RU off white
+  charcoal:"#171F20",   // RU charcoal
 };
 
 // Eight-petal Regent's Rose rosette, multi-colour
@@ -238,7 +239,7 @@ function AllyshipQuiz() {
     minHeight: "100vh",
     background: C.teal,
     color: C.cream,
-    fontFamily: "'Jost', system-ui, sans-serif",
+    fontFamily: "'Avenir Next', 'Avenir', system-ui, sans-serif",
     display: "flex",
     justifyContent: "center",
   };
@@ -248,12 +249,13 @@ function AllyshipQuiz() {
     padding: "0 22px 64px",
     boxSizing: "border-box",
   };
-  const serif = "'Cormorant Garamond', Georgia, serif";
+  const serif = "'TS Magnole', 'Avenir Next', Georgia, serif";
+  const sans  = "'Avenir Next', 'Avenir', -apple-system, system-ui, sans-serif";
 
   return (
     <div style={wrap} ref={topRef}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap');
+        /* Brand fonts: TS Magnole for headings, Avenir Next for body */
         * { -webkit-tap-highlight-color: transparent; }
         @keyframes roseSpin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -263,9 +265,19 @@ function AllyshipQuiz() {
 
       <div style={inner}>
         {stage === "intro" && (
-          <div className="fade" style={{ paddingTop: 64, textAlign: "center" }}>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: 28 }}>
-              <Rose size={92} spin />
+          <div className="fade" style={{ paddingTop: 40, textAlign: "center" }}>
+            {/* Pride hearts strip */}
+            <div style={{ display:"flex", justifyContent:"center", gap:4, marginBottom:20, flexWrap:"nowrap", overflow:"hidden" }} aria-hidden="true">
+              {["#171F20","#FAB190","#70ACE9","#D8CBF1","#F7F1E8","#710704","#FAB190","#E7F95D","#195C4D","#70ACE9","#D8CBF1"].map((col,i)=>(
+                <span key={i} style={{color:col, fontSize:"1.4rem", lineHeight:1}}>&#9829;</span>
+              ))}
+            </div>
+            {/* Rosette: upload rose_swirl_lilac_off-white.png to GitHub */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
+              <img src="./rose_swirl_lilac_off-white.png" alt="Regent's Rose"
+                   width={92} height={92}
+                   style={{ mixBlendMode:"screen", display:"block" }}
+                   onError={e => { e.target.style.display="none"; }} />
             </div>
             <h1
               style={{
@@ -294,7 +306,7 @@ function AllyshipQuiz() {
                 border: "none",
                 borderRadius: 999,
                 padding: "16px 40px",
-                fontFamily: "'Jost', sans-serif",
+                fontFamily: "'Avenir Next', 'Avenir', sans-serif",
                 fontWeight: 600,
                 fontSize: "1.05rem",
                 cursor: "pointer",
@@ -326,7 +338,7 @@ function AllyshipQuiz() {
             <div className="fade" key={q.id}>
               <div
                 style={{
-                  fontFamily: "'Jost', sans-serif",
+                  fontFamily: "'Avenir Next', 'Avenir', sans-serif",
                   fontSize: ".8rem",
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
@@ -364,7 +376,7 @@ function AllyshipQuiz() {
                       borderRadius: 14,
                       padding: "16px 18px",
                       marginBottom: 12,
-                      fontFamily: "'Jost', sans-serif",
+                      fontFamily: "'Avenir Next', 'Avenir', sans-serif",
                       fontSize: "1rem",
                       lineHeight: 1.4,
                       cursor: "pointer",
@@ -408,7 +420,7 @@ function AllyshipQuiz() {
                       border: "none",
                       borderRadius: 999,
                       padding: "15px 34px",
-                      fontFamily: "'Jost', sans-serif",
+                      fontFamily: "'Avenir Next', 'Avenir', sans-serif",
                       fontWeight: 600,
                       fontSize: "1rem",
                       cursor: "pointer",
@@ -426,8 +438,17 @@ function AllyshipQuiz() {
 
         {stage === "result" && (
           <div className="fade" style={{ paddingTop: 44 }}>
+            {/* Pride hearts strip */}
+            <div style={{ display:"flex", justifyContent:"center", gap:4, marginBottom:20, flexWrap:"nowrap", overflow:"hidden" }} aria-hidden="true">
+              {["#171F20","#FAB190","#70ACE9","#D8CBF1","#F7F1E8","#710704","#FAB190","#E7F95D","#195C4D","#70ACE9","#D8CBF1"].map((col,i)=>(
+                <span key={i} style={{color:col, fontSize:"1.4rem", lineHeight:1}}>&#9829;</span>
+              ))}
+            </div>
             <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
-              <Rose size={76} />
+              <img src="./rose_swirl_lilac_off-white.png" alt="Regent's Rose"
+                   width={76} height={76}
+                   style={{ mixBlendMode:"screen", display:"block" }}
+                   onError={e => { e.target.style.display="none"; }} />
             </div>
             <h2
               style={{
@@ -508,7 +529,7 @@ function AllyshipQuiz() {
                         borderRadius: 12,
                         padding: "13px 15px",
                         marginBottom: 9,
-                        fontFamily: "'Jost', sans-serif",
+                        fontFamily: "'Avenir Next', 'Avenir', sans-serif",
                         fontSize: "0.97rem",
                         lineHeight: 1.45,
                         cursor: "pointer",
@@ -563,7 +584,7 @@ function AllyshipQuiz() {
                 borderRadius: 999,
                 padding: "16px 34px",
                 marginTop: 34,
-                fontFamily: "'Jost', sans-serif",
+                fontFamily: "'Avenir Next', 'Avenir', sans-serif",
                 fontWeight: 600,
                 fontSize: "1.02rem",
               }}
