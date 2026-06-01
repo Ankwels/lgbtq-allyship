@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LGBTQIA+ Allyship — Regent's University London Staff Network</title>
+<meta name="description" content="A short, honest allyship reflection. Regent's University London LGBTQIA+ Staff Network, Pride 2026." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<style>
+  html, body { margin: 0; padding: 0; background: #1E454A; }
+  #root { min-height: 100vh; }
+  /* simple loading state before React mounts */
+  .boot { min-height: 100vh; display: flex; align-items: center; justify-content: center;
+          color: #EEEED2; font-family: system-ui, sans-serif; opacity: .5; }
+</style>
+</head>
+<body>
+  <div id="root"><div class="boot">Loading…</div></div>
+
+  <!-- React, ReactDOM and Babel from CDN. No build step required. -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+
+  <script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
+
+// Regent's University 2024 official brand palette
+const C = {
+  teal:    "#195C4D",   // RU green — background
+  red:     "#710704",   // RU red
+  gold:    "#D8CBF1",   // RU violet — accent role
+  salmon:  "#FAB190",   // RU peach
+  green:   "#195C4D",   // RU green
+  lime:    "#E7F95D",   // RU yellow
+  pink:    "#D8CBF1",   // RU violet
+  sky:     "#70ACE9",   // RU light blue
+  cream:   "#F7F1E8",   // RU off white
+  charcoal:"#171F20",   // RU charcoal
+};
+
+// Eight-petal Regent's Rose rosette, multi-colour
+function Rose({ size = 64, spin = false }) {
+  const petals = [C.red, C.gold, C.green, C.salmon, C.pink, C.sky, C.lime, C.gold];
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      style={{
+        display: "block",
+        animation: spin ? "roseSpin 24s linear infinite" : "none",
+      }}
+      aria-hidden="true"
+    >
+      {petals.map((col, i) => (
+        <ellipse
+          key={i}
+          cx="50"
+          cy="26"
+          rx="11"
+          ry="22"
+          fill={col}
+          opacity="0.92"
+          transform={`rotate(${i * 45} 50 50)`}
+        />
+      ))}
+      <circle cx="50" cy="50" r="11" fill={C.cream} />
+      <circle cx="50" cy="50" r="5.5" fill={C.gold} />
+    </svg>
+  );
+}
+
+const QUESTIONS = [
+  {
+    id: "heyguys",
+    scene:
+      "You open a meeting with \u201Chey guys.\u201D A colleague mentioned once that they find it gendered. In the moment, you\u2026",
+    options: [
+      "Don\u2019t notice you\u2019ve said it",
+      "Notice, but it feels too small to interrupt the flow",
+      "Catch it, correct yourself fast, and move on so nobody dwells on it",
+      "Catch it, correct yourself, and let the small awkwardness sit",
+    ],
+    reflect:
+      "Most of us live in the first two. And if you rush to fix it and move the room on, it\u2019s worth asking who that speed is really for. Usually it\u2019s us, wanting the moment gone. The habit doesn\u2019t shift when you apologise. It shifts the hundredth time you catch it before it leaves your mouth.",
+  },
+  {
+    id: "joke",
+    scene:
+      "Someone senior makes a joke that lands wrong. Mildly homophobic, clearly not meant with malice. The room half-laughs. You\u2026",
+    options: [
+      "Laugh along, it\u2019s not worth it",
+      "Say nothing, but have a quiet word with them afterwards",
+      "Say nothing, and feel bad about it later",
+      "Name it lightly, there and then",
+    ],
+    reflect:
+      "The quiet word afterwards feels like the brave choice, and it does beat silence. But notice it costs nobody anything, while everyone who heard the joke watched you say nothing. Speaking up when it\u2019s safe is the easy part. The real question is what you\u2019d risk when it isn\u2019t.",
+  },
+  {
+    id: "onequeer",
+    scene:
+      "Your team is planning Pride messaging. You have one openly queer colleague. You\u2026",
+    options: [
+      "Ask them to lead it, they\u2019ll know best",
+      "Ask them to \u201Cjust check it over\u201D before it goes out",
+      "Run it past a few people, them included but not only them",
+      "Do the reading yourself first, then ask for their view as one of several",
+    ],
+    reflect:
+      "Handing it to them, or asking them to \u201Cjust check,\u201D can feel like including them. It isn\u2019t, quite. It makes one person answer for everyone like them, on top of the job they were actually hired to do. That\u2019s labour, not honour. Sometimes the allyship is doing the homework yourself so the teaching isn\u2019t always theirs.",
+  },
+  {
+    id: "pronouns",
+    scene:
+      "You meet someone new. Their appearance reads clearly as one gender to you. You\u2026",
+    options: [
+      "Use the pronouns that seem obvious",
+      "Use the obvious ones, but I\u2019d switch the instant I was corrected",
+      "Avoid pronouns until I know",
+      "Offer mine first, as an easy opening",
+    ],
+    reflect:
+      "\u201CI\u2019d switch if corrected\u201D sounds open, but it quietly leaves them to do the correcting, in a moment that might not feel safe. Offering yours first is a small thing that moves the risk off them and onto you, where it sits more fairly. The reflex to read gender off a face is the thing worth watching, not just the recovery afterwards.",
+  },
+  {
+    id: "queerword",
+    scene:
+      "You\u2019ve started using \u201Cqueer\u201D as your go-to word. It feels inclusive and current. A colleague mentions, a bit quietly, that they don\u2019t like being called it. You\u2026",
+    options: [
+      "Keep using it, it\u2019s the accepted term now",
+      "Stop for them, but carry on using it generally",
+      "Stop, and notice you\u2019d been using it for everyone without asking",
+      "Ask what they\u2019d prefer, and start noticing who actually uses it about themselves",
+    ],
+    reflect:
+      "This one tends to catch the people who\u2019ve done the reading. \u201CQueer\u201D was reclaimed, and plenty wear it with pride, but it was a slur within living memory and for some the sting hasn\u2019t left. PFLAG\u2019s own line is to use it for people who use it about themselves, and to ask when you\u2019re unsure. Knowing the current word isn\u2019t the same as knowing the person in front of you.",
+  },
+  {
+    id: "samedifference",
+    scene:
+      "A colleague says they \u201Ctreat everyone the same\u2014they don\u2019t see someone\u2019s sexuality or gender.\u201D You think this is\u2026",
+    options: [
+      "Fair enough, that\u2019s equality",
+      "Mostly well meant, and fine",
+      "Well meant, but missing something",
+      "A way of not quite seeing people",
+    ],
+    reflect:
+      "\u201CI treat everyone the same\u201D usually means \u201CI treat everyone like the default\u201D\u2014and the default is rarely queer. Not seeing difference often means not seeing what some people are actually up against. What people tend to be asking for isn\u2019t to be treated identically. It\u2019s to be seen fully.",
+  },
+  {
+    id: "getitwrong",
+    scene:
+      "You misgender someone, or use a term you hadn\u2019t clocked has shifted. You\u2019re corrected. Your first inward feeling is\u2026",
+    options: [
+      "Defensiveness, you didn\u2019t mean anything by it",
+      "A hot flush of embarrassment you want to escape",
+      "The urge to over-apologise and explain yourself",
+      "A quick \u201Cthank you,\u201D correct it, carry on",
+    ],
+    reflect:
+      "The over-apology is the sneaky one. It looks like taking responsibility, but it tends to make the other person comfort you\u2014and now they\u2019re doing the work again. \u201CThanks, my mistake,\u201D and moving on is harder than it sounds, because it means being briefly wrong without making your feelings the thing everyone tends to.",
+  },
+  {
+    id: "everydayword",
+    scene:
+      "\u201CThat\u2019s so gay,\u201D \u201Cthat\u2019s so mental\u201D\u2014the casual phrases that still slip out in your circles. You\u2026",
+    options: [
+      "Use them, nobody means anything by it now",
+      "Don\u2019t use them, but don\u2019t say anything when others do",
+      "Have mostly dropped them yourself",
+      "Drop them, and gently flag it when friends use them",
+    ],
+    reflect:
+      "Dropping them yourself is real progress, don\u2019t undersell it. The harder edge is the silence when your mates use them, because that\u2019s the point where it costs you something to say \u201Cnot that one.\u201D That\u2019s exactly where most of us go quiet. The work was never really about your own vocabulary.",
+  },
+];
+
+const ACTIONS = {
+  minute: {
+    label: "Takes a minute",
+    items: [
+      "Add your pronouns to your email signature or display name. Costs nothing, signals plenty.",
+      "Learn three terms you were unsure about. The PFLAG glossary at pflag.org/glossary is a good start.",
+      "Follow one LGBTQ+ organisation or creator, and actually read what they share, not just like and scroll.",
+    ],
+  },
+  week: {
+    label: "This week",
+    items: [
+      "Use \u201Cpartner\u201D instead of assuming, next time it comes up.",
+      "Correct a misgendering quietly, even when the person isn\u2019t in the room. Especially then.",
+      "Read one of the \u201C10 things you can do\u201D guides from Stonewall or PFLAG.",
+    ],
+  },
+  ready: {
+    label: "When you\u2019re ready",
+    items: [
+      "Speak up the one time you\u2019d normally let a \u201Cjoke\u201D slide.",
+      "Amplify rather than speak over. When someone\u2019s said it well, share it and credit them.",
+      "Show up where it counts, a meeting, a vote, a room where it would be easier not to.",
+    ],
+  },
+};
+
+function AllyshipQuiz() {
+  const [stage, setStage] = useState("intro"); // intro | quiz | result
+  const [idx, setIdx] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [revealed, setRevealed] = useState(false);
+  const [chosenAction, setChosenAction] = useState(null);
+  const topRef = useRef(null);
+
+  useEffect(() => {
+    if (topRef.current) topRef.current.scrollTo({ top: 0, behavior: "smooth" });
+  }, [idx, stage]);
+
+  const q = QUESTIONS[idx];
+  const total = QUESTIONS.length;
+
+  function choose(optIdx) {
+    setAnswers({ ...answers, [q.id]: optIdx });
+    setRevealed(true);
+  }
+
+  function next() {
+    setRevealed(false);
+    if (idx + 1 < total) {
+      setIdx(idx + 1);
+    } else {
+      setStage("result");
+    }
+  }
+
+  const wrap = {
+    minHeight: "100vh",
+    background: C.teal,
+    color: C.cream,
+    fontFamily: "'Avenir Next', 'Avenir', system-ui, sans-serif",
+    display: "flex",
+    justifyContent: "center",
+  };
+  const inner = {
+    width: "100%",
+    maxWidth: 480,
+    padding: "0 22px 64px",
+    boxSizing: "border-box",
+  };
+  const serif = "'TS Magnole', 'Avenir Next', Georgia, serif";
+  const sans  = "'Avenir Next', 'Avenir', -apple-system, system-ui, sans-serif";
+
+  return (
+    <div style={wrap} ref={topRef}>
+      <style>{`
+        /* Brand fonts: TS Magnole for headings, Avenir Next for body */
+        * { -webkit-tap-highlight-color: transparent; }
+        @keyframes roseSpin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade { animation: fadeUp .45s ease both; }
+        .opt:active { transform: scale(.985); }
+      `}</style>
+
+      <div style={inner}>
+        {stage === "intro" && (
+          <div className="fade" style={{ paddingTop: 40, textAlign: "center" }}>
+            {/* Pride hearts strip */}
+            <div style={{ display:"flex", justifyContent:"center", gap:4, marginBottom:20, flexWrap:"nowrap", overflow:"hidden" }} aria-hidden="true">
+              {["#171F20","#FAB190","#70ACE9","#D8CBF1","#F7F1E8","#710704","#FAB190","#E7F95D","#195C4D","#70ACE9","#D8CBF1"].map((col,i)=>(
+                <span key={i} style={{color:col, fontSize:"1.4rem", lineHeight:1}}>&#9829;</span>
+              ))}
+            </div>
+            {/* Rosette: upload rose_swirl_lilac_off-white.png to GitHub */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
+              <img src="./rose_swirl_lilac_off-white.png" alt="Regent's Rose"
+                   width={92} height={92}
+                   style={{ mixBlendMode:"screen", display:"block" }}
+                   onError={e => { e.target.style.display="none"; }} />
+            </div>
+            <h1
+              style={{
+                fontFamily: serif,
+                fontWeight: 600,
+                fontSize: "2.5rem",
+                lineHeight: 1.05,
+                margin: "0 0 20px",
+              }}
+            >
+              Allyship isn\u2019t a badge you earn
+            </h1>
+            <p style={{ fontSize: "1.05rem", lineHeight: 1.6, opacity: 0.9, marginBottom: 18 }}>
+              There\u2019s no score here, and nothing to pass. These questions are about what you
+              do, not what you believe. They\u2019re hard on purpose, and they\u2019re hard for
+              everyone, the people who wrote them included.
+            </p>
+            <p style={{ fontSize: "1.05rem", lineHeight: 1.6, opacity: 0.9, marginBottom: 36 }}>
+              Stay with the discomfort. That\u2019s the part that matters.
+            </p>
+            <button
+              onClick={() => setStage("quiz")}
+              style={{
+                background: C.salmon,
+                color: C.teal,
+                border: "none",
+                borderRadius: 999,
+                padding: "16px 40px",
+                fontFamily: "'Avenir Next', 'Avenir', sans-serif",
+                fontWeight: 600,
+                fontSize: "1.05rem",
+                cursor: "pointer",
+              }}
+            >
+              Begin
+            </button>
+          </div>
+        )}
+
+        {stage === "quiz" && (
+          <div style={{ paddingTop: 28 }}>
+            {/* progress */}
+            <div style={{ display: "flex", gap: 6, marginBottom: 26 }}>
+              {QUESTIONS.map((_, i) => (
+                <div
+                  key={i}
+                  style={{
+                    flex: 1,
+                    height: 4,
+                    borderRadius: 4,
+                    background: i <= idx ? C.lime : "rgba(238,238,210,0.22)",
+                    transition: "background .3s",
+                  }}
+                />
+              ))}
+            </div>
+
+            <div className="fade" key={q.id}>
+              <div
+                style={{
+                  fontFamily: "'Avenir Next', 'Avenir', sans-serif",
+                  fontSize: ".8rem",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  opacity: 0.55,
+                  marginBottom: 14,
+                }}
+              >
+                {idx + 1} of {total}
+              </div>
+              <p
+                style={{
+                  fontFamily: serif,
+                  fontSize: "1.6rem",
+                  lineHeight: 1.25,
+                  fontWeight: 500,
+                  margin: "0 0 28px",
+                }}
+              >
+                {q.scene}
+              </p>
+
+              {!revealed &&
+                q.options.map((opt, i) => (
+                  <button
+                    key={i}
+                    className="opt"
+                    onClick={() => choose(i)}
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      textAlign: "left",
+                      background: "rgba(238,238,210,0.06)",
+                      color: C.cream,
+                      border: "1px solid rgba(238,238,210,0.22)",
+                      borderRadius: 14,
+                      padding: "16px 18px",
+                      marginBottom: 12,
+                      fontFamily: "'Avenir Next', 'Avenir', sans-serif",
+                      fontSize: "1rem",
+                      lineHeight: 1.4,
+                      cursor: "pointer",
+                      transition: "transform .08s, border-color .2s, background .2s",
+                    }}
+                    onMouseDown={(e) => (e.currentTarget.style.borderColor = C.lime)}
+                  >
+                    {opt}
+                  </button>
+                ))}
+
+              {revealed && (
+                <div className="fade">
+                  <div
+                    style={{
+                      background: "rgba(238,238,210,0.06)",
+                      border: `1px solid ${C.gold}`,
+                      borderRadius: 14,
+                      padding: "18px 18px 20px",
+                      marginBottom: 14,
+                    }}
+                  >
+                    <div
+                      style={{
+                        opacity: 0.7,
+                        marginBottom: 12,
+                        fontStyle: "italic",
+                        fontFamily: serif,
+                        fontSize: "1.15rem",
+                      }}
+                    >
+                      You chose: {q.options[answers[q.id]]}
+                    </div>
+                    <p style={{ fontSize: "1.02rem", lineHeight: 1.6, margin: 0 }}>{q.reflect}</p>
+                  </div>
+                  <button
+                    onClick={next}
+                    style={{
+                      background: C.lime,
+                      color: C.teal,
+                      border: "none",
+                      borderRadius: 999,
+                      padding: "15px 34px",
+                      fontFamily: "'Avenir Next', 'Avenir', sans-serif",
+                      fontWeight: 600,
+                      fontSize: "1rem",
+                      cursor: "pointer",
+                      float: "right",
+                    }}
+                  >
+                    {idx + 1 < total ? "Next" : "Finish"}
+                  </button>
+                  <div style={{ clear: "both" }} />
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {stage === "result" && (
+          <div className="fade" style={{ paddingTop: 44 }}>
+            {/* Pride hearts strip */}
+            <div style={{ display:"flex", justifyContent:"center", gap:4, marginBottom:20, flexWrap:"nowrap", overflow:"hidden" }} aria-hidden="true">
+              {["#171F20","#FAB190","#70ACE9","#D8CBF1","#F7F1E8","#710704","#FAB190","#E7F95D","#195C4D","#70ACE9","#D8CBF1"].map((col,i)=>(
+                <span key={i} style={{color:col, fontSize:"1.4rem", lineHeight:1}}>&#9829;</span>
+              ))}
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
+              <img src="./rose_swirl_lilac_off-white.png" alt="Regent's Rose"
+                   width={76} height={76}
+                   style={{ mixBlendMode:"screen", display:"block" }}
+                   onError={e => { e.target.style.display="none"; }} />
+            </div>
+            <h2
+              style={{
+                fontFamily: serif,
+                fontWeight: 600,
+                fontSize: "2rem",
+                lineHeight: 1.1,
+                textAlign: "center",
+                margin: "0 0 22px",
+              }}
+            >
+              So, where\u2019s the work?
+            </h2>
+            <p style={{ fontSize: "1.05rem", lineHeight: 1.62, opacity: 0.92, marginBottom: 16 }}>
+              If any of that stung a little, good. That\u2019s not you failing, it\u2019s you spotting
+              the gap between who you\u2019d like to be and what\u2019s easy to do on a given Tuesday.
+              Everyone has that gap. We do too.
+            </p>
+            <p style={{ fontSize: "1.05rem", lineHeight: 1.62, opacity: 0.92, marginBottom: 32 }}>
+              Allyship isn\u2019t closing that gap once and being done. It\u2019s picking the slightly
+              harder option, again, in the small moments nobody would blame you for skipping. No
+              badge for that. You just get to be someone people can actually count on, which is
+              the better thing to be anyway.
+            </p>
+
+            <div
+              style={{
+                height: 1,
+                background: "rgba(238,238,210,0.2)",
+                margin: "0 0 30px",
+              }}
+            />
+
+            <p
+              style={{
+                fontFamily: serif,
+                fontSize: "1.5rem",
+                fontWeight: 500,
+                margin: "0 0 8px",
+              }}
+            >
+              Pick one thing.
+            </p>
+            <p style={{ fontSize: "0.98rem", lineHeight: 1.55, opacity: 0.8, marginBottom: 26 }}>
+              Not ten. One. The point isn\u2019t the list, it\u2019s leaving with something real you\u2019ll
+              actually do.
+            </p>
+
+            {Object.entries(ACTIONS).map(([key, group]) => (
+              <div key={key} style={{ marginBottom: 24 }}>
+                <div
+                  style={{
+                    fontSize: ".78rem",
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: C.lime,
+                    marginBottom: 12,
+                  }}
+                >
+                  {group.label}
+                </div>
+                {group.items.map((item, i) => {
+                  const id = key + i;
+                  const active = chosenAction === id;
+                  return (
+                    <button
+                      key={id}
+                      onClick={() => setChosenAction(active ? null : id)}
+                      style={{
+                        display: "flex",
+                        gap: 12,
+                        width: "100%",
+                        textAlign: "left",
+                        alignItems: "flex-start",
+                        background: active ? C.salmon : "rgba(238,238,210,0.06)",
+                        color: active ? C.teal : C.cream,
+                        border: `1px solid ${active ? C.salmon : "rgba(238,238,210,0.18)"}`,
+                        borderRadius: 12,
+                        padding: "13px 15px",
+                        marginBottom: 9,
+                        fontFamily: "'Avenir Next', 'Avenir', sans-serif",
+                        fontSize: "0.97rem",
+                        lineHeight: 1.45,
+                        cursor: "pointer",
+                        transition: "background .2s, color .2s, border-color .2s",
+                      }}
+                    >
+                      <span
+                        style={{
+                          flexShrink: 0,
+                          width: 18,
+                          height: 18,
+                          borderRadius: "50%",
+                          border: `2px solid ${active ? C.teal : C.gold}`,
+                          background: active ? C.teal : "transparent",
+                          marginTop: 2,
+                        }}
+                      />
+                      {item}
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+
+            {chosenAction && (
+              <div
+                className="fade"
+                style={{
+                  background: C.gold,
+                  color: C.teal,
+                  borderRadius: 14,
+                  padding: "18px 20px",
+                  marginTop: 16,
+                  fontSize: "1rem",
+                  lineHeight: 1.5,
+                }}
+              >
+                That\u2019s your one. Do it this week, before the feeling fades. Then come back and
+                pick another.
+              </div>
+            )}
+
+            {/* Link through to the full resources page */}
+            <a
+              href="./resources.html"
+              style={{
+                display: "block",
+                textAlign: "center",
+                background: C.salmon,
+                color: C.teal,
+                textDecoration: "none",
+                borderRadius: 999,
+                padding: "16px 34px",
+                marginTop: 34,
+                fontFamily: "'Avenir Next', 'Avenir', sans-serif",
+                fontWeight: 600,
+                fontSize: "1.02rem",
+              }}
+            >
+              Explore the resources \u2192
+            </a>
+
+            <p style={{ fontSize: ".95rem", lineHeight: 1.55, opacity: 0.75, marginTop: 26 }}>
+              Want to go further? The PFLAG glossary at{" "}
+              <a href="https://pflag.org/glossary" target="_blank" rel="noopener" style={{ color: C.lime }}>
+                pflag.org/glossary
+              </a>{" "}
+              is a kind place to start.
+            </p>
+
+            <div style={{ textAlign: "center", marginTop: 40, opacity: 0.55, fontSize: ".82rem" }}>
+              Regent\u2019s University London LGBTQIA+ Staff Network \u00b7 Pride 2026
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<AllyshipQuiz />);
+  </script>
+</body>
+</html>
