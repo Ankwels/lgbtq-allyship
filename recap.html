@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your responses, LGBTQIA+ Allyship Quiz</title>
+<style>
+  :root {
+    --green:    #195c4d;
+    --offwhite: #f7f1e8;
+    --violet:   #d8cbf1;
+    --charcoal: #171f20;
+    --gold:     #C3A35B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #ede9f9;
+    color: #2a2a2a;
+    font-family: 'Avenir Next', 'Avenir', 'DM Sans', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--green);
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0.75;
+    transition: opacity .15s;
+  }
+  .back-link:hover { opacity: 1; }
+  .page-title {
+    font-family: 'TS Magnole', 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
+    font-weight: 600;
+    color: var(--green);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .page-sub {
+    font-size: 0.88rem;
+    color: #666;
+  }
+
+  /* ── RECAP ITEMS ── */
+  .recap-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 22px 22px 24px;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--gold);
+    box-shadow: 0 1px 4px rgba(25,92,77,0.07);
+  }
+  .recap-item.has-link {
+    border-left-color: var(--green);
+  }
+  .item-number {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .item-scene {
+    font-family: 'TS Magnole', 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.02rem;
+    line-height: 1.45;
+    color: #2a2a2a;
+    margin-bottom: 12px;
+  }
+  .item-chosen {
+    display: inline-block;
+    background: var(--green);
+    color: #f7f1e8;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .item-reflect {
+    font-size: 0.93rem;
+    line-height: 1.68;
+    color: #2a2a2a;
+  }
+  .item-link {
+    display: inline-block;
+    margin-top: 12px;
+    color: var(--green);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── NO ANSWERS ── */
+  .no-answers {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+  }
+  .no-answers a {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* ── FOOTER ACTIONS ── */
+  .footer-actions {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(25,92,77,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .btn-print {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green);
+    color: var(--offwhite);
+    border: none;
+    border-radius: 999px;
+    padding: 13px 28px;
+    font-family: 'Avenir Next', 'Avenir', system-ui, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .15s;
+    text-decoration: none;
+  }
+  .btn-print:hover { opacity: 0.85; }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--green);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 0;
+    font-family: 'Avenir Next', 'Avenir', system-ui, sans-serif;
+  }
+  .resources-note {
+    font-size: 0.88rem;
+    color: #555;
+    line-height: 1.55;
+    margin-top: 8px;
+  }
+  .resources-note a {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* ── PAGE FOOTER ── */
+  .page-footer {
+    margin-top: 48px;
+    font-size: 0.75rem;
+    color: #aaa;
+    text-align: center;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; }
+    .back-link, .footer-actions, .page-footer { display: none; }
+    .recap-item { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+    .page { padding: 24px; }
+    .page-header { border-bottom-color: #ccc; }
+    .page-title { color: #195c4d; }
+    .item-chosen { background: #195c4d; color: #f7f1e8; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .item-link { color: #195c4d; }
+    .print-resources {
+      display: block !important;
+      margin-top: 24px;
+      font-size: 0.85rem;
+      color: #444;
+      border-top: 1px solid #ddd;
+      padding-top: 16px;
+    }
+  }
+  .print-resources { display: none; }
+</style>
+</head>
+<body>
+<div class="page" id="page">
+  <div class="no-answers" id="loading">Loading your responses…</div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    id: "heyguys",
+    scene: "You open a meeting with \u201chey guys.\u201d A colleague mentioned once that they find it gendered. In the moment, you\u2026",
+    options: ["Don\u2019t notice you\u2019ve said it","Notice, but it feels too small to interrupt the flow","Catch it, correct yourself fast, and move on so nobody dwells on it","Catch it, correct yourself, and let the small awkwardness sit"],
+    reflect: "Most of us say \u201chey guys\u201d without thinking. Correcting it once won\u2019t change that. You change it by catching yourself, again and again, until something like \u201ccolleagues\u201d or \u201ceveryone\u201d comes out instead.",
+  },
+  {
+    id: "joke",
+    scene: "A joke lands wrong. Could be homophobic, transphobic, ableist, racist, mild enough that it\u2019s \u201cjust a joke,\u201d clearly not meant with malice. Could be a senior colleague, could be a mate, could be a student in your seminar. The room half-laughs. You\u2026",
+    options: ["Laugh along, it\u2019s not worth it","Say nothing, but have a quiet word afterwards","Say nothing, and feel bad about it later","Name it lightly, there and then"],
+    reflect: "Speaking up is always worth it. The quiet word afterwards doesn\u2019t cost much, but it leaves everyone who heard the joke having watched you stay silent. Speak up when you witness it.",
+  },
+  {
+    id: "onequeer",
+    scene: "Something about LGBTQ+ life comes up at work. It\u2019s a discussion about LGBTQ+ intersections, in particular disability and neurodiversity. There\u2019s only one or two openly queer people in the room. You\u2026",
+    options: ["Turn to them, they\u2019ll know best","Ask them to explain, it\u2019s easier than looking it up","Wait to see if they want to speak before anyone looks at them","Look it up yourself, and don\u2019t make it their job to teach you"],
+    reflect: "It feels respectful to turn to the disabled or neurodivergent queer person in the room, like you\u2019re centring their voice, but it quietly makes them the spokesperson for everyone like them. In the words of Stonewall: \u201ca marginalised person is not responsible for teaching you about their identity\u2026 please listen to our experiences, but don\u2019t expect us to be a spokesperson for all LGBT disabled people.\u201d",
+    link: { label: "Stonewall: being an ally to LGBT disabled people", url: "https://www.stonewall.org.uk/news/8-ways-be-better-ally-lgbt-disabled-people" },
+  },
+  {
+    id: "pronouns",
+    scene: "You meet someone new, or you\u2019re starting a class or a meeting. Their appearance reads clearly as one gender to you. You\u2026",
+    options: ["Use the pronouns that seem obvious (to you)","Go round the room, everyone says their pronouns","Get corrected, you switch at that point","Don\u2019t assume. Let people know pronouns are important, and allow a low-pressure way for people to share theirs if they want to (in their email signature, or on Blackboard)"],
+    reflect: "It\u2019s worth noticing how fast we gender people based on their looks. Using people\u2019s correct pronouns shows that we respect them and who they are. However, a forced round of pronouns can put someone on the spot when they don\u2019t feel safe to say. Visibility isn\u2019t safe for everyone, and for some people sharing pronouns at all is a risk. It might not always be immediately obvious what pronouns someone uses, but you can suggest people add their pronouns in their email signature, social media profile or Blackboard, if it feels safe for them, rather than demanding they declare them to a room.",
+    link: { label: "Stonewall: 10 ways to be an ally to trans and non-binary people", url: "https://www.stonewall.org.uk/resources/lgbtq-hubs/trans-hub/10-ways-to-step-up-as-an-ally-to-trans-and-non-binary-people" },
+  },
+  {
+    id: "getitwrong",
+    scene: "You misgender someone, or use a term you hadn\u2019t clocked has shifted. You\u2019re corrected. Your first inward feeling is\u2026",
+    options: ["Defensiveness, you didn\u2019t mean anything by it","A hot flush of embarrassment you want to escape","The urge to over-apologise and explain yourself","Take it in, and get it right next time"],
+    reflect: "Most of these slips just mean we\u2019re human and still learning. The over-apologising is a trap. It looks like taking responsibility, but it often ends with them having to reassure you. This puts the work back on them. PFLAG\u2019s line is that you can feel embarrassed, but you shouldn\u2019t make the moment about your feelings. Take responsibility, get it right next time. Being an ally is about what we do, not what we feel.",
+  },
+  {
+    id: "samedifference",
+    scene: "A colleague says they \u201ctreat everyone the same,they don\u2019t see someone\u2019s sexuality or gender.\u201d You think this is\u2026",
+    options: ["Fair enough, that\u2019s equality","Mostly well meant, and fine","Well meant, but missing something","A way of not quite seeing people"],
+    reflect: "\u201cI treat everyone the same\u201d usually means treating everyone like the normative default, and that default leaves out the queer and anyone whose difference doesn\u2019t fit the norm. Not seeing difference often means not seeing what some people are up against. Most people aren\u2019t asking to be treated identically. They\u2019re asking to be seen fully.",
+  },
+  {
+    id: "blacktrans",
+    scene: "Black LGBTQIA+ people, and Black trans people especially, are too often left out of the media, of workplaces, of LGBTQ+ representation. When you notice it happening, you\u2026",
+    options: ["Assume the wider LGBTQ+ cause already covers them","Care, but leave it to Black people to raise it","Say something when it\u2019s clearly bad","Use your privilege to centre and amplify Black LGBTQIA+ people, and challenge racism vocally so your spaces don\u2019t perpetuate barriers to inclusion"],
+    reflect: "White, cis, straight or non-disabled, most of us carry some privilege we didn\u2019t earn, some doors that open easier. Recognising it is the easy part. Using it is the work. Your allyship isn\u2019t inclusive if it leaves out Black LGBTQIA+ people, and specifically Black trans people, whose oppression is compounded and who get overlooked even within Black and within LGBTQ+ spaces.",
+    link: { label: "Stonewall\u2019s QTIPOC Hub", url: "https://www.stonewall.org.uk/resources/lgbtq-hubs/qtipoc-hub" },
+  },
+  {
+    id: "theroom",
+    scene: "A room, plenty of LGBTQ+ and straight people, allies and supporters, you among them. Look around. Who\u2019s at the centre? Who\u2019s at the edge, or missing? Is the room still mostly white? Mostly non-disabled? The same few voices? Who else isn\u2019t here? You\u2026",
+    options: ["Hadn\u2019t thought about it, everyone here means well","Have noticed, but assume someone closer to it will say something","Mention it when it\u2019s clearly gone too far","Watch who gets centred, and use whatever room you have to shift it"],
+    reflect: "It\u2019s tempting to think allyship runs one way, straight to queer, and stops there. It doesn\u2019t. Inside any LGBTQ+ space there are still insiders and outsiders, and the people at the edge are usually the same ones pushed out everywhere else, by ethnicity, by disability, by class, by how their queerness reads. The work is noticing who\u2019s still not in the room, and you don\u2019t have to be queer, or straight, to have a part in it.",
+  },
+];
+
+function render() {
+  const raw = sessionStorage.getItem('allyshipAnswers');
+  const page = document.getElementById('page');
+
+  if (!raw) {
+    page.innerHTML = `
+      <div class="no-answers">
+        <p style="font-size:1.1rem;margin-bottom:16px;">No responses found.</p>
+        <p><a href="index.html">Take the quiz first</a> and your responses will appear here.</p>
+      </div>`;
+    return;
+  }
+
+  const answers = JSON.parse(raw);
+
+  const items = QUESTIONS.map((q, i) => {
+    const chosenIdx = answers[q.id];
+    if (chosenIdx === undefined) return '';
+    const link = q.link
+      ? `<a class="item-link" href="${q.link.url}" target="_blank" rel="noopener">${q.link.label} \u2192</a>`
+      : '';
+    return `<div class="recap-item ${q.link ? 'has-link' : ''}">
+      <div class="item-number">Question ${i + 1} of ${QUESTIONS.length}</div>
+      <p class="item-scene">${q.scene}</p>
+      <span class="item-chosen">You chose: ${q.options[chosenIdx]}</span>
+      <p class="item-reflect">${q.reflect}</p>
+      ${link}
+    </div>`;
+  }).join('');
+
+  page.innerHTML = `
+    <div class="page-header">
+      <a class="back-link" href="index.html">
+        ← Back to quiz
+      </a>
+      <h1 class="page-title">Your responses</h1>
+      <p class="page-sub">A full record of what you chose and the reflections from today's quiz.</p>
+    </div>
+
+    ${items}
+
+    <p class="print-resources">Want to go further? Visit our resources page for Stonewall, PFLAG, akt and more.</p>
+
+    <div class="footer-actions">
+      <button class="btn-print" onclick="window.print()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print or save as PDF
+      </button>
+      <p class="resources-note">
+        Want to go further? <a href="resources.html">Explore our resources</a> , Stonewall, PFLAG, akt and more.
+      </p>
+    </div>
+
+    <p class="page-footer">Regent\u2019s University London LGBTQIA+ Staff Network \u00b7 Pride 2026</p>`;
+}
+
+render();
+</script>
+</body>
+</html>

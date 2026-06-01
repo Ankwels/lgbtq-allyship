@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allyship: the resources, LGBTQIA+ Staff Network</title>
+<style>
+  :root {
+    --green:    #195c4d;
+    --offwhite: #f7f1e8;
+    --violet:   #d8cbf1;
+    --charcoal: #171f20;
+    --gold:     #C3A35B;
+    --salmon:   #FFA188;
+    --lime:     #DAF092;
+    --sky:      #A4DEEB;
+    --pink:     #FF81B0;
+    --red:      #CE4B3E;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Avenir Next', 'Avenir', 'DM Sans', system-ui, sans-serif;
+    background: var(--charcoal);
+    color: var(--offwhite);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--green);
+    padding: 3rem 1.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Rainbow bar across top */
+  .rainbow-bar {
+    height: 5px;
+    background: linear-gradient(
+      to right,
+      #E40303 14.28%,
+      #FF8C00 28.57%,
+      #FFED00 42.85%,
+      #008026 57.14%,
+      #004DFF 71.42%,
+      #750787 100%
+    );
+    width: 100%;
+    position: absolute;
+    top: 0; left: 0;
+  }
+
+  /* Rose swirl image in header */
+  .header-rose {
+    display: block;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1rem;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    opacity: 0.92;
+  }
+
+  header h1 {
+    font-family: 'TS Magnole', 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: 700;
+    color: var(--offwhite);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+  }
+
+  header .sub {
+    font-size: 0.82rem;
+    color: var(--violet);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+
+  /* ── EQUALITY LITERACY CARD ── */
+  .eq-card {
+    background: var(--offwhite);
+    color: var(--charcoal);
+    margin: 0 1.5rem 0;
+    border-radius: 12px 12px 0 0;
+    padding: 1.8rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .eq-card h2 {
+    font-family: 'TS Magnole', 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  .eq-card p {
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.55;
+  }
+
+  .eq-card a.pill {
+    display: inline-block;
+    background: var(--green);
+    color: var(--offwhite);
+    padding: 0.5rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    align-self: flex-start;
+    letter-spacing: 0.03em;
+    transition: background 0.2s;
+  }
+  .eq-card a.pill:hover { background: var(--charcoal); }
+
+  /* ── STICKY NAV ── */
+  nav.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--offwhite);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 1.5rem;
+    border-bottom: 2px solid var(--green);
+  }
+  nav.sticky::-webkit-scrollbar { display: none; }
+
+  nav.sticky a {
+    flex-shrink: 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--green);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.15s;
+    white-space: nowrap;
+  }
+  nav.sticky a:hover { border-bottom-color: var(--violet); }
+
+  /* ── MAIN ── */
+  main {
+    background: var(--offwhite);
+    margin: 0 1.5rem;
+    padding-bottom: 3rem;
+  }
+
+  section {
+    padding: 2.5rem 1.5rem;
+    border-bottom: 1px solid rgba(25,92,77,0.12);
+  }
+  section:last-child { border-bottom: none; }
+
+  section h2 {
+    font-family: 'TS Magnole', 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.6rem;
+    color: var(--green);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  section h3 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    font-weight: 700;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  section p {
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+  }
+
+  /* ── ORG CARDS ── */
+  .orgs-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .org-card {
+    border-radius: 10px;
+    padding: 1.2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .org-card.pflag {
+    background: var(--green);
+    color: var(--offwhite);
+  }
+  .org-card.stonewall {
+    background: #6C2DC7;
+    color: #fff;
+  }
+
+  .org-card .org-name {
+    font-family: 'TS Magnole', 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .org-card .org-country {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+  .org-card p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    opacity: 0.9;
+    margin: 0;
+    color: inherit;
+  }
+  .org-card a {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: underline;
+    color: inherit;
+    opacity: 0.85;
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+
+  /* ── RESOURCE LISTS ── */
+  .resource-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0.8rem 0;
+  }
+
+  .resource-list li a {
+    display: block;
+    padding: 0.75rem 1rem;
+    background: white;
+    border-radius: 8px;
+    color: var(--charcoal);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-left: 3px solid var(--gold);
+    transition: border-color 0.15s, background 0.15s;
+    line-height: 1.4;
+  }
+  .resource-list li a:hover {
+    border-left-color: var(--green);
+    background: #f0f9f5;
+  }
+  .resource-list li a .res-note {
+    display: block;
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: #666;
+    margin-top: 0.2rem;
+  }
+
+  .resource-list.uk li a       { border-left-color: var(--green); }
+  .resource-list.qtipoc li a   { border-left-color: var(--pink); }
+  .resource-list.global li a   { border-left-color: var(--sky); }
+  .resource-list.books li a    { border-left-color: var(--salmon); }
+  .resource-list.heritage li a { border-left-color: var(--red); }
+
+  /* ── GLOBAL NOTE ── */
+  .context-note {
+    background: var(--charcoal);
+    color: var(--offwhite);
+    border-radius: 10px;
+    padding: 1.2rem 1rem;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    margin: 0.8rem 0 1.2rem;
+  }
+  .context-note strong { color: var(--violet); }
+
+  /* ── ACTION MENU ── */
+  .action-tier { margin-bottom: 1.5rem; }
+  .action-tier h3 { color: var(--green); margin-bottom: 0.6rem; }
+  .action-item {
+    background: white;
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.88rem;
+    color: #333;
+    line-height: 1.5;
+    border-left: 3px solid var(--violet);
+  }
+
+  /* ── BLOCKQUOTE ── */
+  blockquote {
+    border-left: 4px solid var(--gold);
+    margin: 1.2rem 0;
+    padding: 0.8rem 1rem;
+    background: white;
+    border-radius: 0 8px 8px 0;
+  }
+  blockquote p {
+    font-style: italic;
+    color: var(--charcoal);
+    font-size: 0.95rem;
+  }
+  blockquote cite {
+    display: block;
+    font-size: 0.75rem;
+    color: #888;
+    font-style: normal;
+    margin-top: 0.4rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--green);
+    color: var(--offwhite);
+    text-align: center;
+    padding: 2rem 1.5rem 1.5rem;
+    font-size: 0.8rem;
+    margin: 0 1.5rem;
+    border-radius: 0 0 12px 12px;
+  }
+  footer a { color: var(--violet); }
+
+  /* ── HEARTS ROW ── */
+  .hearts-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1.4rem 1.5rem 2rem;
+    margin: 0 1.5rem;
+    background: var(--charcoal);
+    border-radius: 0 0 16px 16px;
+  }
+  .hearts-row span {
+    font-size: 1.3rem;
+    line-height: 1;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (min-width: 640px) {
+    header, .eq-card, nav.sticky, main, footer, .hearts-row {
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    header { padding-left: 2rem; padding-right: 2rem; }
+    nav.sticky { margin-left: auto; margin-right: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="rainbow-bar"></div>
+  <img
+    src="rose_swirl_lilac_soft_peach_rotated__1_.png"
+    alt="Regent's rose"
+    class="header-rose"
+  />
+  <h1>Allyship: the resources</h1>
+  <p class="sub">Pride 2026 · Regent's University London LGBTQIA+ Staff Network</p>
+</header>
+
+<!-- ── EQUALITY LITERACY CARD ── -->
+<div class="eq-card">
+  <h2>Equality Literacy</h2>
+  <p>The PFLAG National Glossary is a good place to start if you are unsure of any terms: plain, practical definitions of language used across LGBTQ+ communities.</p>
+  <a class="pill" href="https://pflag.org/glossary" target="_blank" rel="noopener">Open the glossary ↗</a>
+</div>
+
+<!-- ── STICKY NAV ── -->
+<nav class="sticky" aria-label="Page sections">
+  <a href="#key-orgs">Key Orgs</a>
+  <a href="#uk">Allyship Guides</a>
+  <a href="#qtipoc">QTIPOC</a>
+  <a href="#global">Global</a>
+  <a href="#heritage">Heritage</a>
+  <a href="#books">Books, Films & Anthems</a>
+  <a href="#actions">Actions</a>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+
+  <!-- KEY ORGS -->
+  <section id="key-orgs">
+    <h2>Where to start</h2>
+    <div class="orgs-row">
+      <div class="org-card pflag">
+        <span class="org-country">United States</span>
+        <span class="org-name">PFLAG</span>
+        <p>The largest organisation for LGBTQ+ people, their parents, families and allies. Strong on practical language and family support.</p>
+        <a href="https://pflag.org" target="_blank" rel="noopener">pflag.org ↗</a>
+      </div>
+      <div class="org-card stonewall">
+        <span class="org-country">United Kingdom</span>
+        <span class="org-name">Stonewall</span>
+        <p>The UK's leading LGBTQ+ rights charity. Best on workplace inclusion, trans allyship and disability intersection.</p>
+        <a href="https://www.stonewall.org.uk" target="_blank" rel="noopener">stonewall.org.uk ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- UK / ALLYSHIP GUIDES -->
+  <section id="uk">
+    <h2>Allyship Guides</h2>
+    <ul class="resource-list uk">
+      <li><a href="https://www.stonewall.org.uk/resources/lgbtq-hubs/trans-hub/10-ways-to-step-up-as-an-ally-to-trans-and-non-binary-people" target="_blank" rel="noopener">
+        Stonewall: 10 ways to be a trans ally
+        <span class="res-note">On pronouns, language, and normalising inclusion at work</span>
+      </a></li>
+      <li><a href="https://www.stonewall.org.uk/news/8-ways-be-better-ally-lgbt-disabled-people" target="_blank" rel="noopener">
+        Stonewall: 8 ways to be a better ally to LGBT disabled people
+        <span class="res-note">On compounding discrimination, doing your own research, not relying on one person</span>
+      </a></li>
+      <li><a href="https://www.stonewall.org.uk/resources/lgbtq-hubs/qtipoc-hub" target="_blank" rel="noopener">
+        Stonewall: Black QTIPOC hub
+        <span class="res-note">Resources centring Black queer, trans, intersex people of colour in the UK</span>
+      </a></li>
+      <li><a href="https://www.akt.org.uk" target="_blank" rel="noopener">
+        akt (Albert Kennedy Trust)
+        <span class="res-note">UK charity supporting LGBTQ+ young people facing homelessness or hostile environments. Allyship extends beyond Pride month.</span>
+      </a></li>
+      <li><a href="https://prideinlondon.org" target="_blank" rel="noopener">
+        Pride in London
+        <span class="res-note">The annual London march and celebration, championing intersectionality and grassroots LGBTQIA+ activism</span>
+      </a></li>
+      <li><a href="https://galop.org.uk" target="_blank" rel="noopener">
+        Galop
+        <span class="res-note">UK anti-violence charity for LGBTQ+ people, including hate crime and domestic abuse support</span>
+      </a></li>
+    </ul>
+  </section>
+
+  <!-- QTIPOC & INTERSECTIONAL -->
+  <section id="qtipoc">
+    <h2>QTIPOC & intersectional voices</h2>
+
+    <h3>QTIPOC organisations</h3>
+    <ul class="resource-list qtipoc">
+      <li><a href="https://www.ukblackpride.org.uk" target="_blank" rel="noopener">
+        UK Black Pride
+        <span class="res-note">Europe's largest celebration for LGBTQ+ people of African, Asian, Caribbean, Middle Eastern and Latin American heritage</span>
+      </a></li>
+      <li><a href="https://www.consortium.lgbt" target="_blank" rel="noopener">
+        Consortium: LGBTQ+ member organisations
+        <span class="res-note">Directory of UK LGBTQ+ organisations, many led by and for people of colour and disabled communities</span>
+      </a></li>
+      <li><a href="https://pflag.org/connects-communities/" target="_blank" rel="noopener">
+        PFLAG Connects: Communities
+        <span class="res-note">Virtual support spaces for LGBTQ+ people and families from Black, Latino, and Asian American Pacific Islander backgrounds</span>
+      </a></li>
+    </ul>
+
+    <h3>Trans organisations</h3>
+    <ul class="resource-list qtipoc">
+      <li><a href="https://genderedintelligence.co.uk" target="_blank" rel="noopener">
+        Gendered Intelligence
+        <span class="res-note">Trans-led UK organisation providing support, training and resources across trans inclusion and workplace allyship</span>
+      </a></li>
+      <li><a href="https://mermaidsuk.org.uk" target="_blank" rel="noopener">
+        Mermaids
+        <span class="res-note">UK support for transgender, nonbinary and gender-diverse young people and their families</span>
+      </a></li>
+      <li><a href="https://transactual.org.uk" target="_blank" rel="noopener">
+        TransActual
+        <span class="res-note">Trans-led organisation focused on lived experience, data and trans liberation in the UK</span>
+      </a></li>
+    </ul>
+
+    <h3>Mental health</h3>
+    <ul class="resource-list qtipoc">
+      <li><a href="https://lgbtfoundation.org.uk" target="_blank" rel="noopener">
+        LGBT Foundation
+        <span class="res-note">National charity with strong mental health and wellbeing resources, helpline and counselling for LGBTQ+ people</span>
+      </a></li>
+      <li><a href="https://www.mindout.org.uk" target="_blank" rel="noopener">
+        MindOut
+        <span class="res-note">LGBTQ+ mental health service run by and for LGBTQ+ people, including counselling, peer support and advocacy</span>
+      </a></li>
+      <li><a href="https://switchboard.lgbt" target="_blank" rel="noopener">
+        Switchboard LGBT+ Helpline
+        <span class="res-note">Confidential helpline and online chat for anyone identifying as LGBT+, on any topic</span>
+      </a></li>
+    </ul>
+
+    <h3>Disability & neurodiversity</h3>
+    <ul class="resource-list qtipoc">
+      <li><a href="https://www.stonewall.org.uk/young-futures/disabled-and-neurodivergent-lgbtq-support" target="_blank" rel="noopener">
+        Stonewall: disabled and neurodivergent LGBTQ+ support
+        <span class="res-note">Resources on the intersection of disability, neurodiversity and LGBTQ+ identity, including autism, ADHD, dyslexia and mental health</span>
+      </a></li>
+      <li><a href="https://www.disabilityrightsuk.org" target="_blank" rel="noopener">
+        Disability Rights UK
+        <span class="res-note">Leading UK disability organisation, with resources on intersectional discrimination and rights at work</span>
+      </a></li>
+    </ul>
+  </section>
+
+  <!-- GLOBAL VOICES -->
+  <section id="global">
+    <h2>Global voices</h2>
+
+    <h3>Africa</h3>
+    <ul class="resource-list global">
+      <li><a href="https://theinitiativeforequalrights.org" target="_blank" rel="noopener">
+        TIERs Nigeria
+        <span class="res-note">Human rights documentation and advocacy for LGBTQ+ people in Nigeria</span>
+      </a></li>
+      <li><a href="https://galck.org" target="_blank" rel="noopener">
+        GALCK+ Kenya
+        <span class="res-note">Gay and Lesbian Coalition of Kenya, coordinating LGBTQ+ civil society</span>
+      </a></li>
+    </ul>
+
+    <h3>Asia & Pacific</h3>
+    <ul class="resource-list global">
+      <li><a href="https://www.ilgaasia.org" target="_blank" rel="noopener">
+        ILGA Asia
+        <span class="res-note">Regional network connecting LGBTQ+ organisations across Asia and the Pacific</span>
+      </a></li>
+      <li><a href="https://humsafar.org" target="_blank" rel="noopener">
+        The Humsafar Trust, India
+        <span class="res-note">One of India's oldest LGBTQ+ organisations, health and advocacy focus</span>
+      </a></li>
+    </ul>
+
+    <h3>Latin America</h3>
+    <ul class="resource-list global">
+      <li><a href="https://www.ilgalac.org/en/" target="_blank" rel="noopener">
+        ILGA Latin America & Caribbean
+        <span class="res-note">Regional network covering organising from Costa Rica to Argentina</span>
+      </a></li>
+    </ul>
+  </section>
+
+  <!-- HERITAGE -->
+  <section id="heritage">
+    <h2>Heritage</h2>
+    <ul class="resource-list heritage">
+      <li><a href="https://www.bishopsgate.org.uk/stories/the-many-colours-of-lgbtq-pride/" target="_blank" rel="noopener">
+        The Many Colours of LGBTQ+ Pride
+        <span class="res-note">Bishopsgate Institute. The history and meaning behind Pride's colours, flags and symbols.</span>
+      </a></li>
+      <li><a href="https://www.smithsonianmag.com/blogs/national-museum-american-indian/2021/06/23/lgbtqia-pride-and-two-spirit-people/" target="_blank" rel="noopener">
+        Two-Spirit identity: a short history
+        <span class="res-note">Smithsonian Magazine. Pre-colonial gender diversity in Indigenous North American cultures.</span>
+      </a></li>
+      <li><a href="https://ilga.org/news/a-photographic-diary-of-ilga-world-over-the-decades/" target="_blank" rel="noopener">
+        A photographic diary of ILGA World over the decades
+        <span class="res-note">ILGA World. A visual history of the global LGBTQ+ movement.</span>
+      </a></li>
+      <li><a href="https://globalcompactrefugees.org/good-practices/digital-archive-oral-histories-about-lgbtiq-forced-displacement" target="_blank" rel="noopener">
+        A digital archive of oral histories about LGBTIQ forced displacement
+        <span class="res-note">The Global Compact on Refugees, UNHCR</span>
+      </a></li>
+      <li><a href="https://humanists.uk/community/lgbt-humanists/" target="_blank" rel="noopener">
+        LGBT+ Humanists UK
+        <span class="res-note">History of LGBTQ+ secular and humanist organising in the UK, founded 1979 (formerly GALHA)</span>
+      </a></li>
+      <li><a href="https://www.stonewall.org.uk/resources/key-dates-lesbian-gay-bi-and-trans-equality" target="_blank" rel="noopener">
+        Stonewall: key dates for lesbian, gay, bi and trans equality
+        <span class="res-note">UK timeline of social, political and legislative change</span>
+      </a></li>
+      <li><a href="https://www.apa.org/topics/lgbtq/history" target="_blank" rel="noopener">
+        A brief history of LGBT social movements
+        <span class="res-note">American Psychological Association. Evidence of same-sex love and gender diversity across cultures and centuries, from Sappho to the Two-Spirit tradition.</span>
+      </a></li>
+    </ul>
+  </section>
+
+  <!-- BOOKS, FILMS & ANTHEMS -->
+  <section id="books">
+    <h2>Books, films and greatest anthems</h2>
+    <ul class="resource-list books">
+      <li><a href="https://www.amnesty.org.uk/knowledge-hub/all-resources/seven-queer-books-changed-world/" target="_blank" rel="noopener">
+        Seven queer books that changed the world
+        <span class="res-note">Amnesty International UK</span>
+      </a></li>
+      <li><a href="https://www.bfi.org.uk/lists/30-best-lgbt-films-all-time" target="_blank" rel="noopener">
+        The 30 best LGBTQIA+ films of all time
+        <span class="res-note">British Film Institute</span>
+      </a></li>
+      <li><a href="https://www.queermusicheritage.com/" target="_blank" rel="noopener">
+        Queer Music Heritage
+        <span class="res-note">An archive of LGBTQ+ music history</span>
+      </a></li>
+      <li><a href="https://m.youtube.com/watch?v=c0bK-T7GSCA" target="_blank" rel="noopener">
+        Queer artists to add to your playlists
+        <span class="res-note">YouTube</span>
+      </a></li>
+      <li><a href="https://www.billboard.com/lists/lgbtq-anthems-queer-pride-songs/" target="_blank" rel="noopener">
+        The 100 greatest LGBTQ+ anthems of all time
+        <span class="res-note">Billboard</span>
+      </a></li>
+    </ul>
+  </section>
+
+  <!-- ACTIONS -->
+  <section id="actions">
+    <h2>One thing you could do</h2>
+
+    <div class="action-tier">
+      <h3>Takes a minute</h3>
+      <div class="action-item">Add your pronouns to your email signature. Not because you have to. Because it normalises it for people who do.</div>
+      <div class="action-item">Stop saying "hey guys" to mixed groups. Try "everyone," "folks," "all." Takes a week to unlearn.</div>
+      <div class="action-item">If someone shares their pronouns with you, use them. If you slip, correct yourself and move on. The over-apology puts the burden back on them.</div>
+    </div>
+
+    <div class="action-tier">
+      <h3>This week</h3>
+      <div class="action-item">If you hear something, say something. One sentence is enough: "I don't think that one lands."</div>
+      <div class="action-item">Use your platform to speak up, but don't speak over Black LGBT people or take credit for their work, centre them in the conversation instead.</div>
+      <div class="action-item">Ask about someone's partner, not their "girlfriend" or "boyfriend." The word you choose says something about what you assume.</div>
+    </div>
+
+    <div class="action-tier">
+      <h3>When you're ready</h3>
+      <div class="action-item">Read something by someone whose experience is further from your own than the sources you usually reach for. The global voices section is a start.</div>
+      <div class="action-item">Notice who gets centred in the spaces you're in, including LGBTQ+ ones. Who's at the edge? Who's not there? You don't have to be queer to have a part in shifting it.</div>
+      <div class="action-item">Allyship doesn't stop in July. The test is October, February, the ordinary Tuesday when it would be easier not to.</div>
+    </div>
+
+    <blockquote>
+      <p>Ally is a verb. Actions speak louder than words, so rather than trying to convince people you are on their side, just be there.</p>
+      <cite>UC Davis LGBTQIA Resource Center</cite>
+    </blockquote>
+  </section>
+
+</main>
+
+<!-- ── TAKE THE QUIZ ── -->
+<div style="background:var(--charcoal);text-align:center;padding:2rem 1.5rem;margin:0 1.5rem;">
+  <a href="index.html" style="
+    display:inline-block;
+    background:var(--violet);
+    color:var(--charcoal);
+    padding:14px 36px;
+    border-radius:999px;
+    font-family:'Avenir Next','Avenir',system-ui,sans-serif;
+    font-weight:600;
+    font-size:1rem;
+    text-decoration:none;
+    letter-spacing:0.02em;
+  ">Take the allyship quiz →</a>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>Pride 2026</p>
+  <p style="margin-top:0.4rem;">
+    <a href="https://teams.microsoft.com/l/channel/19%3AHTmCXLXnL0jKT5NSWmIL6SV9tS-Sjm4idJB7HJAzQGE1%40thread.tacv2/General?groupId=ba281ee6-5327-4fb5-9170-caf7414308a2&tenantId=b40c8424-283d-4a7a-a31b-80b82fee1303" target="_blank" rel="noopener">QueeRs (LGBTQIA+ Ally Network at Regents)</a>
+  </p>
+</footer>
+
+<!-- ── HEARTS ROW (very bottom) ── -->
+<div class="hearts-row" aria-hidden="true">
+  <span style="color:#E40303">♥</span>
+  <span style="color:#FF8C00">♥</span>
+  <span style="color:#FFED00">♥</span>
+  <span style="color:#008026">♥</span>
+  <span style="color:#004DFF">♥</span>
+  <span style="color:#750787">♥</span>
+  <span style="color:#d8cbf1">♥</span>
+  <span style="color:#FFA188">♥</span>
+  <span style="color:#DAF092">♥</span>
+  <span style="color:#A4DEEB">♥</span>
+  <span style="color:#FF81B0">♥</span>
+  <span style="color:#C3A35B">♥</span>
+  <span style="color:#f7f1e8">♥</span>
+  <span style="color:#1a1a1a; -webkit-text-stroke: 1px #555">♥</span>
+</div>
+
+</body>
+</html>
